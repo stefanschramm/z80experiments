@@ -1,4 +1,9 @@
+
+* * * Everything in here is work in progress! * * *
+
 This is the documentation of my experiments with a Z80 CPU and related components.
+
+I did the experiments in the order as they are numbered. From experiment 01 on the system is extended step by step in a way that the old software in the ROM from the previous experiment should be able to work with the new wiring. I highly recommend to test if the old software still works after re-wiring because it might help to find some gross errors.
 
 ---------------------------------------------------------------------
 00 minimal test
@@ -6,7 +11,7 @@ This is the documentation of my experiments with a Z80 CPU and related component
 Components:
 - 1 x Breadboard :)
 - 1 x 5 V power supply (I currently use an old AT power supply from a 486; the allocation of the peripheral connector is: black = GND, red = +5 V)
-- 1 x Z80 (DIL package)
+- 1 x Z80 CPU (DIL package)
 - 3 x 5 V LED (these LEDs include an resistor for direct usage with 5 V)
 - 1 x 1 MHz oscillator
 - 8 x  2,2 K resistors
@@ -19,14 +24,20 @@ The LEDs are connected to the 3 most significant bits of the address bus. The da
 01 looptest
 
 Additional components:
-- 1 x EEPROM
+- 1 x EEPROM 28C64
 - (EEPROM programmer, z80asm)
 
 ---------------------------------------------------------------------
 02 piotest with loop
 
+Additional components:
+- 1 x Z80 PIO
+
 ---------------------------------------------------------------------
 03 ramtest
+
+Additional components:
+- 1 x SRAM 62256
 
 ---------------------------------------------------------------------
 04 stacktest
