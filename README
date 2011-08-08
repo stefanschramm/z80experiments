@@ -13,9 +13,7 @@ Components:
 - some cables
 
 Description:
-The LEDs are connected to the 3 most significant bits of the address bus.
-The data bus lines are connected to GND using the resistors. They produce the bit pattern 00000000 which is the NOP command.
-When powered on the LEDs should light up alternately (counting up) because the CPU walks thru the complete address space executing NOPs.
+The LEDs are connected to the 3 most significant bits of the address bus. The data bus lines are connected to GND using the resistors. They produce the bit pattern 00000000 which is the NOP command. When powered on the LEDs should light up alternately (counting up) because the CPU walks thru the complete address space executing NOPs.
 
 ---------------------------------------------------------------------
 01 looptest
