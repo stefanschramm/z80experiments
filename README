@@ -1,0 +1,39 @@
+This is the documentation of my experiments with a Z80 CPU and related components.
+
+---------------------------------------------------------------------
+00 minimal test
+
+Components:
+- 1 x Breadboard :)
+- 1 x 5 V power supply (I currently use an old AT power supply from a 486; the allocation of the peripheral connector is: black = GND, red = +5 V)
+- 1 x Z80 (DIL package)
+- 3 x 5 V LED (these LEDs include an resistor for direct usage with 5 V)
+- 1 x 1 MHz oscillator
+- 8 x  2,2 K resistors
+- some cables
+
+Description:
+The LEDs are connected to the 3 most significant bits of the address bus.
+The data bus lines are connected to GND using the resistors. They produce the bit pattern 00000000 which is the NOP command.
+When powered on the LEDs should light up alternately (counting up) because the CPU walks thru the complete address space executing NOPs.
+
+---------------------------------------------------------------------
+01 looptest
+
+Additional components:
+- 1 x EEPROM
+- (EEPROM programmer, z80asm)
+
+---------------------------------------------------------------------
+02 piotest with loop
+
+---------------------------------------------------------------------
+03 ramtest
+
+---------------------------------------------------------------------
+04 stacktest
+
+---------------------------------------------------------------------
+05 blinkenlichten
+
+---------------------------------------------------------------------
