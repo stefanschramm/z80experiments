@@ -27,11 +27,17 @@ Additional components:
 - 1 x EEPROM 28C64
 - (EEPROM programmer, z80asm)
 
+Description:
+The 64 kBit (= 8 kByte) EEPROM is connected in a way that it's mapped to the 0x0000 - 0x2000 address space. When the CPU starts/resets it will execute the commands from 0x0000 on. The programm in the EEPROM loops a bit and then HALTs the CPU which should lit the LED connected to the HALT output.
+
 ---------------------------------------------------------------------
 02 piotest with loop
 
 Additional components:
 - 1 x Z80 PIO
+
+Description:
+The Z80 PIO is connected to the CPU and is addressed by the IO adresses 0x04 to 0x07. The program sets port A into bit mode and declares all 8 pins as output. After initialization of the PIO the connected LEDs are switched on and off. Up to this point the system still runs without RAM.
 
 ---------------------------------------------------------------------
 03 ramtest
@@ -39,10 +45,19 @@ Additional components:
 Additional components:
 - 1 x SRAM 62256
 
+Description:
+The RAM is mapped to 0x8000 to 0xffff (the complete second half of the address space). The program is the same as before, but in the last step it writes the bit pattern 00000001 into memory location 0xf000, sets the A register to 0, does a pause, reads the bit pattern from 0xf000 and output it to the LEDs. So if the RAM is working correctly one LED should be on and the others off.
+
 ---------------------------------------------------------------------
 04 stacktest
 
+Description:
+Since the system has got some RAM, now a stack can be used (which is needed for operations like PUSH, POP, CALL and RET - especially to do function calls). At first the stackpointer (SP) is initialized with 0xffff because it grows downwards. The program parts for the LEDs and pauses are outsourced and called as functions (pause, ledoutput). This way the program got a bit shorter (not just the asm source code, but also the assembled binary!).
+
 ---------------------------------------------------------------------
 05 blinkenlichten
+
+Description:
+Just toying around with the new possibilities.
 
 ---------------------------------------------------------------------
