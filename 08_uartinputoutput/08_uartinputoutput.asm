@@ -60,8 +60,7 @@ mainloop:
 
 	OUT	(PIOAD), A
 
-	; CALL	putc
-	; TODO: problem hier: data ready status wird beim schreiben geaendert --> getc liest nur noch jedes 2te byte
+	CALL	putc
 
 	; repeat
 	JP	mainloop
@@ -95,6 +94,7 @@ uartloop:
 	JP	Z, uartloop
 	POP	AF
 	OUT	(UART_THR), A
+	RET
 
 ; getc
 ; returns: A (received character)
