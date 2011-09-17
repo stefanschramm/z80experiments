@@ -37,7 +37,7 @@ Additional components:
 - 1 x Z80 PIO
 
 Description:
-The Z80 PIO is connected to the CPU and is addressed by the IO adresses 0x04 to 0x07. The program sets port A into bit mode and declares all 8 pins as output. After initialization of the PIO the connected LEDs are switched on and off. Up to this point the system still runs without RAM.
+The Z80 PIO is connected to the CPU and is addressed by the IO adresses 0x04 to 0x07. The program sets port A into bit mode and declares all 8 pins as output. After initialization the LEDs connected to PIO port A are switched on, off and on again. This system still works without RAM.
 
 ---------------------------------------------------------------------
 03 ramtest
@@ -46,13 +46,14 @@ Additional components:
 - 1 x SRAM 62256
 
 Description:
-The RAM is mapped to 0x8000 to 0xffff (the complete second half of the address space). The program is the same as before, but in the last step it writes the bit pattern 00000001 into memory location 0xf000, sets the A register to 0, does a pause, reads the bit pattern from 0xf000 and output it to the LEDs. So if the RAM is working correctly one LED should be on and the others off.
+The RAM is mapped to 0x8000 to 0xffff (the complete second half of the address space). The program is the same as before, but in the last step it writes the bit pattern 10101010 into memory location 0x8000, sets the A register to 0, does a pause, reads the bit pattern from 0x8000 and outputs it to the LEDs. So if the RAM is working correctly the LEDs should show the pattern 10101010.
 
 ---------------------------------------------------------------------
 04 stacktest
 
 Description:
-Since the system has got some RAM, now a stack can be used (which is needed for operations like PUSH, POP, CALL and RET - especially to do function calls). At first the stackpointer (SP) is initialized with 0xffff because it grows downwards. The program parts for the LEDs and pauses are outsourced and called as functions (pause, ledoutput). This way the program got a bit shorter (not just the asm source code, but also the assembled binary!).
+Since the system has got some RAM, now a stack can be used (which is needed for operations like PUSH, POP, CALL and RET - especially to do function calls). At first the stackpointer (SP) is initialized with 0xffff because it grows downwards. The program parts for the pauses are outsourced and called as function (pause). This way the program got a bit shorter (not just the asm source code, but also the assembled binary).
+When using functions it is important to pay attention which registers are modified by the function. In the pause function the D and B registers are modified but the others like A are preserved.
 
 ---------------------------------------------------------------------
 05 blinkenlichten

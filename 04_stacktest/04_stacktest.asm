@@ -9,7 +9,7 @@
 	RAMBEG:	EQU 0x8000
 
 main:
-	; init stack to end of ram
+	; init stackpointer to end of ram
 	LD	SP, RAMEND
 
 	; init pio
@@ -18,39 +18,39 @@ main:
 	LD	A, 0x00 ; all ports are output
 	OUT	(PIOAC), A
 
-	LD	A, 0x00
-	CALL	ledoutput
 	LD	A, 11000000b
-	CALL	ledoutput
+	OUT	(PIOAD), A
 	CALL	pause
 	RRA
-	CALL	ledoutput
+	OUT	(PIOAD), A
 	CALL	pause
 	RRA
-	CALL	ledoutput
+	OUT	(PIOAD), A
 	CALL	pause
 	RRA
-	CALL	ledoutput
+	OUT	(PIOAD), A
 	CALL	pause
 	RRA
-	CALL	ledoutput
+	OUT	(PIOAD), A
+	CALL	pause
+	RRA
+	OUT	(PIOAD), A
+	CALL	pause
+	RRA
+	OUT	(PIOAD), A
 	CALL	pause
 
 	HALT
 
-; pause
+; pause (function)
 ; destroys: D, B
 pause:
 	LD	D, 0xb0
-loop1:	LD	B, 0xff
-loop2:	DJNZ	loop2
+loop1:
+	LD	B, 0xff
+loop2:
+	DJNZ	loop2
 	DEC	D
 	JP	NZ, loop1
-	RET
-
-; ledoutput
-; reads: A (led bitpattern)
-ledoutput:
-	OUT	(PIOAD), A
 	RET
 
