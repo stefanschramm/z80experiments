@@ -56,13 +56,7 @@ Since the system has got some RAM, now a stack can be used (which is needed for 
 When using functions it is important to pay attention which registers are modified by the function. In the pause function the D and B registers are modified but the others like A are preserved.
 
 ---------------------------------------------------------------------
-05 blinkenlichten
-
-Description:
-Just toying around with the new possibilities.
-
----------------------------------------------------------------------
-06 uartblink
+05 uartblink
 
 Additional components:
 - 1 x UART 16C550
@@ -71,7 +65,7 @@ Description:
 ...
 
 ---------------------------------------------------------------------
-07 uartoutput
+06 uartoutput
 
 Additional components:
 - 1 x MAX232N
@@ -80,13 +74,13 @@ Description:
 ...
 
 ---------------------------------------------------------------------
-08 uartinputoutput
+07 uartinputoutput
 
 Description:
 ...
 
 ---------------------------------------------------------------------
-09 uartloader
+08 uartloader
 
 Descriotion:
 ...
