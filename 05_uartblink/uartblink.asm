@@ -15,7 +15,6 @@ main:
 	; init stack to end of ram
 	LD	SP, RAMEND
 
-	LD	D, 0xb0
 	CALL	pause
 
 	; init pio
@@ -50,14 +49,18 @@ mainloop:
 	; repeat
 	JP	mainloop
 
+	; actually never reached:
 	HALT
 
 ; pause
 ; reads: D (pause)
 ; destroys: D, B
 pause:
-loop1:	LD	B, 0xff
-loop2:	DJNZ	loop2
+	LD	D, 0xb0
+loop1:
+	LD	B, 0xff
+loop2:
+	DJNZ	loop2
 	DEC	D
 	JP	NZ, loop1
 	RET
