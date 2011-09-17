@@ -5,8 +5,8 @@
 	PIOAC:	EQU 0x06
 	PIOBC:	EQU 0x07
 
-	RAMEND:	EQU 0xffff
 	RAMBEG:	EQU 0x8000
+	RAMEND:	EQU 0xffff
 
 main:
 	; init stackpointer to end of ram

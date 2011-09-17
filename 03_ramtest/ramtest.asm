@@ -48,7 +48,7 @@ loop6:
 	LD	A, 0xff ; bitpattern (all on)
 	OUT	(PIOAD), A
 
-	; store bit pattern in ram
+	; store bit pattern in ram at 0x8000 (beginning of ram)
 	LD	A, 10101010b
 	LD	(0x8000), A
 	; set A register to 0

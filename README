@@ -62,7 +62,7 @@ Additional components:
 - 1 x UART 16C550
 
 Description:
-...
+The program reads the UART MCR (modem control register), toggles bit 2 and 3 (UART outputs OUT1 and OUT2) and writes the result back into the MCR. This process is looped and should make the LEDs connected to the UART blink. In this case no special initialization of the UART is required.
 
 ---------------------------------------------------------------------
 06 uartoutput
@@ -71,19 +71,24 @@ Additional components:
 - 1 x MAX232N
 
 Description:
-...
+The UART is initialized (baudrate of 9600 bps) and then outputs the character 'X' in a loop. This and the following experiments can be tested using any terminal emulator. I prefer microcom, but others like minicom or HyperTerminal should work as well. The settings are speed: 9600 baud, flow control: none, 8 data bits, no parity, 1 stopbit ("8N1").
 
 ---------------------------------------------------------------------
 07 uartinputoutput
 
 Description:
-...
+In a loop a character is read from the UART's serial input, outputs the bitpattern to the PIO's LEDs and sends it back to serial output ("echo").
 
 ---------------------------------------------------------------------
 08 uartloader
 
 Descriotion:
-...
+The loader implements two commands that can be sent via serial interface: 'L' for "load" and 'J' for "jump". The load command is used to read arbitrary data and store it into the RAM. It expects two two-byte (16 bit) arguments: the length of the data to store and the memory location where the data should be stored. These values are expected in little-endian encoding which means that the lower 8 bits of the number need to be sent first.
+If the serial interface of the computer connected to the system's UART is already configured correctly (9600 bps) you could simply use echo to load some data:
+echo -e -n "L\x09\x00\x00\x80ABCDEFGHI" > /dev/ttyS0
+Will load 9 bytes ("ABCDEFGHI") into memory location 0x8000.
+The jump command expects as argument the memory location where to jump to. Load and jump can be used to load and execute code without re-flashing the EEPROM all the time.
+The Python scripts load.py and jump.py can be used to load and execute code. loadable.asm contains an example which can be assembled and loaded at 0x8000. For loadable programs it's important to correctly specify ORG that the assembler will put in the right values for absolute memory adresses.
 
 ---------------------------------------------------------------------
 

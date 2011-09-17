@@ -20,8 +20,8 @@
 	UART_DLL:	EQU UART_BASE + 0x00
 	UART_DLM:	EQU UART_BASE + 0x01
 
-	RAMEND:	EQU 0xffff
 	RAMBEG:	EQU 0x8000
+	RAMEND:	EQU 0xffff
 
 main:
 	; init stack to end of ram
@@ -35,17 +35,27 @@ main:
 
 	; init uart (0x10 - 0x17)
 	; taken from http://www.cosam.org/projects/z80/serial.html
-	LD	A, 0x00          ; Disable all interrupts
-	OUT	(UART_IER), A    ; Send to Interrupt Enable Register
-	LD	A, 0x80          ; Mask to set DLAB on
-	OUT	(UART_LCR), A    ; Send to Line Control Register
-	LD	A, 12            ; Divisor of 12 = 9600 bps with 1.8432 MHz clock
-		                 ; (1843200 Hz / 16 / 12 = 9600 bps)
-	OUT	(UART_THR), A    ; Set LSB of divisor
-	LD	A, 00            ; This will be the MSB of the divisior
-	OUT	(UART_IER), A    ; Send to the MSB register
-	LD	A, 0x03          ; 8 bits, 1 stop, no parity (and clear DLAB)
-	OUT	(UART_LCR), A    ; Write new value to LCR
+
+	; disable all interrupts
+	LD	A, 0x00 
+	; send to Interrupt Enable Register
+	OUT	(UART_IER), A 
+	; mask to set DLAB on
+	LD	A, 0x80
+	; send to Line Control Register
+	OUT	(UART_LCR), A 
+	; divisor of 12 = 9600 bps with 1.8432 MHz clock (1843200 Hz / 16 / 12 = 9600 bps)
+	LD	A, 12 
+	; set LSB of divisor 
+	OUT	(UART_THR), A        
+	; this will be the MSB of the divisior
+	LD	A, 00            
+	; send to the MSB register
+	OUT	(UART_IER), A        
+	; 8 bits, 1 stop, no parity (and clear DLAB)
+	LD	A, 0x03          
+	; write new value to LCR
+	OUT	(UART_LCR), A     
 
 mainloop:
 
@@ -60,8 +70,6 @@ mainloop:
 	CALL	Z, command_load
 	CP	'J'
 	CALL	Z, command_jump
-
-	; CALL	putc
 
 	; repeat
 	JP	mainloop
@@ -94,11 +102,6 @@ command_load:
 	OUT   (PIOAD), A
 	; read data loop
 command_load_loop:
-
-	; display c ("bytes left")
-	LD	A, C
-	OUT   (PIOAD), A
-
 	CALL	getc
 	; store read byte into memory
 	LD	(HL), A
@@ -109,7 +112,7 @@ command_load_loop:
 	JP	NZ, command_load_loop
 	CP	C
 	JP	NZ, command_load_loop
-	; B and C are zero - continue
+	; B and C are zero (= all bytes were read) - continue
 
 	; show status on pio leds
 	LD	A, 00010000b
@@ -134,23 +137,8 @@ command_jump:
 	POP	HL
 	RET
 
-; pause
-; reads: D (pause)
-pause:
-	PUSH	DE
-	PUSH	BC
-loop1:
-	LD	B, 0xff
-loop2:
-	DJNZ	loop2
-	DEC	D
-	JP	NZ, loop1
-	POP	BC
-	POP	DE
-	RET
-
 ; putc
-; reads: A (character to send to uart)
+; reads: A (character to send to serial output)
 putc:
 	PUSH	AF
 uartloop:
@@ -159,6 +147,7 @@ uartloop:
 	BIT	5, A
 	JP	Z, uartloop
 	POP	AF
+	; output character
 	OUT	(UART_THR), A
 	RET
 
@@ -169,6 +158,7 @@ getc:
 	IN	A, (UART_LSR)
 	BIT	0, A
 	JR	Z, getc
+	; read character
 	IN	A, (UART_RBR)
 	RET
 

@@ -6,10 +6,11 @@
 	PIOBC:	EQU 0x07
 	
 	; uart base address: 0x10, offset for MCR: 0x04
-	UARTMCR:	EQU 0x14
+	UART_BASE:	EQU 0x10
+	UART_MCR:	EQU UART_BASE + 0x04
 
-	RAMEND:	EQU 0xffff
 	RAMBEG:	EQU 0x8000
+	RAMEND:	EQU 0xffff
 
 main:
 	; init stack to end of ram
@@ -30,30 +31,27 @@ mainloop:
 	OUT	(PIOAD), A
 
 	; read uart's mcr
-	IN	A, (UARTMCR)
+	IN	A, (UART_MCR)
 	; toggle out1 and out2
 	XOR	00001100b
 	; write back
-	OUT	(UARTMCR), A
+	OUT	(UART_MCR), A
 
-	LD	D, 0xb0
 	CALL	pause
 
 	; pio a leds off
 	LD	A, 00000000b
 	OUT	(PIOAD), A
 
-	LD	D, 0xb0
 	CALL	pause
 
 	; repeat
 	JP	mainloop
 
-	; actually never reached:
+	; never reached
 	HALT
 
 ; pause
-; reads: D (pause)
 ; destroys: D, B
 pause:
 	LD	D, 0xb0
