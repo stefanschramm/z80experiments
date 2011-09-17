@@ -31,7 +31,7 @@ Description:
 The 64 kBit (= 8 kByte) EEPROM is connected in a way that it's mapped to the 0x0000 - 0x2000 address space. When the CPU starts/resets it will execute the commands from 0x0000 on. The programm in the EEPROM loops a bit and then HALTs the CPU which should lit the LED connected to the HALT output.
 
 ---------------------------------------------------------------------
-02 piotest with loop
+02 piotest
 
 Additional components:
 - 1 x Z80 PIO
@@ -61,3 +61,34 @@ Description:
 Just toying around with the new possibilities.
 
 ---------------------------------------------------------------------
+06 uartblink
+
+Additional components:
+- 1 x UART 16C550
+
+Description:
+...
+
+---------------------------------------------------------------------
+07 uartoutput
+
+Additional components:
+- 1 x MAX232N
+
+Description:
+...
+
+---------------------------------------------------------------------
+08 uartinputoutput
+
+Description:
+...
+
+---------------------------------------------------------------------
+09 uartloader
+
+Descriotion:
+...
+
+---------------------------------------------------------------------
+
