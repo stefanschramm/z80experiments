@@ -2,7 +2,8 @@
 
 import struct
 
-tty = open("/dev/ttyS0", "w")
+#tty = open("/dev/ttyS0", "w")
+tty = open("/dev/ttyUSB0", "w")
 
 # call 'jump' command
 tty.write("J")

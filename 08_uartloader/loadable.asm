@@ -12,12 +12,8 @@ loop:
 
 pause:
 	PUSH	BC
-	LD	C, 0x10
-loop1:
-	LD	B, 0xff
+	LD	B, 0x03
 loop2:
 	DJNZ	loop2
-	DEC	C
-	JP	NZ, loop1
 	POP	BC
 	RET

@@ -82,7 +82,7 @@ In a loop a character is read from the UART's serial input, outputs the bitpatte
 ---------------------------------------------------------------------
 08 uartloader
 
-Descriotion:
+Description:
 The loader implements two commands that can be sent via serial interface: 'L' for "load" and 'J' for "jump". The load command is used to read arbitrary data and store it into the RAM. It expects two two-byte (16 bit) arguments: the length of the data to store and the memory location where the data should be stored. These values are expected in little-endian encoding which means that the lower 8 bits of the number need to be sent first.
 If the serial interface of the computer connected to the system's UART is already configured correctly (9600 bps) you could simply use echo to load some data:
 echo -e -n "L\x09\x00\x00\x80ABCDEFGHI" > /dev/ttyS0

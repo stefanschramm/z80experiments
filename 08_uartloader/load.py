@@ -11,7 +11,8 @@ if len(sys.argv) != 2:
 filename = sys.argv[1]
 filesize = os.stat(filename).st_size
 
-tty = open("/dev/ttyS0", "w")
+#tty = open("/dev/ttyS0", "w")
+tty = open("/dev/ttyUSB0", "w")
 f = open(filename)
 
 # call 'load' command
